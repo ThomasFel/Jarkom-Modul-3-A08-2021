@@ -626,6 +626,6 @@ service squid restart
 3. Bisa melakukan wget [https://raw.githubusercontent.com/FeinardSlim/Praktikum-Modul-2-Jarkom/main/super.franky.zip](https://raw.githubusercontent.com/FeinardSlim/Praktikum-Modul-2-Jarkom/main/super.franky.zip)  untuk mendapatkan file untuk [super.franky.yyy.com](super.franky.yyy.com).
 
 ## Kendala
-1. Sedikit kesulitan di bagian DHCP Relay karena tidak ada di Modul 2.
-2. Sedikit kesulitan di konfigurasi delay bandwidth. 
-3. Proxy yang tidak bisa mengakses super.franky dan selalu dialihkan mercusuar. Solusinya adalah menambahkan (paling atas) nameserver IP Enies Lobby di resolv.conf Water7.
+1. Sedikit kesulitan di bagian **DHCP Relay** karena tidak ada di [Modul 2](https://github.com/arsitektur-jaringan-komputer/Modul-Jarkom/tree/master/Modul-2/).
+2. Sedikit kesulitan di konfigurasi *delay bandwidth*. 
+3. *Proxy* tidak bisa mengakses [super.franky.a08.com](super.franky.a08.com) dan selalu dialihkan ke halaman *error* ([Mercusuar](https://mercusuar.uzone.id/)). Solusinya adalah menambahkan (di paling atas) *nameserver* **IP EniesLobby** pada `resolv.conf` **Water7**.
