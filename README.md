@@ -131,7 +131,7 @@ Agar *node*-*node* lainnya dapat mengakses internet, jalankan *command* berikut 
 echo nameserver 192.168.122.1 > /etc/resolv.conf
 ```
 
-*Restart* semua *node* kembali. Lalu, *testing* semua *node* apakah sudah terkoneksi dengan internet dengan `ping` ke [**google.com**](google.com). Sebagai contoh pada `Loguetown`:
+*Restart* semua *node* kembali. Lalu, *testing* semua *node* apakah sudah terkoneksi dengan internet dengan `ping` ke [**google.com**](https://www.google.com). Sebagai contoh pada `Loguetown`:
 
 <img src="https://user-images.githubusercontent.com/37539546/139522122-43ddb61d-0b3a-484f-a4a5-433109dd6529.JPG" width="600">
 
@@ -231,6 +231,8 @@ service isc-dhcp-server restart
 
 ### (Lanjutan) 4. Client mendapatkan DNS dari EniesLobby dan client dapat terhubung dengan internet melalui DNS tersebut.
 
+### Jawaban:
+
 ### Jipangu
 
 Buka *file* lagi, yaitu **/etc/dhcp/dhcpd.conf** dan edit seperti konfigurasi berikut.
@@ -244,7 +246,21 @@ Buka *file* lagi, yaitu **/etc/dhcp/dhcpd.conf** dan edit seperti konfigurasi be
 service isc-dhcp-server restart
 ```
 
-### Jawaban:
+### EniesLobby
+
+Melakukan instalasi **bind9** terlebih dahulu pada `EniesLobby` dengan *update package list*. *Command* yang dijalankan adalah sebagai berikut.
+```
+apt-get update
+apt-get install bind9 -y
+```
+Buka *file* **/etc/bind/named.conf.options** dan edit seperti konfigurasi berikut.
+
+<img src="https://user-images.githubusercontent.com/37539546/141607951-e806b4f2-c11c-4de7-8f9f-d11d8d04fdf9.JPG" width="600">
+
+*Restart* bind9.
+```
+service bind9 restart
+```
 
 ## Soal 6
 
@@ -252,11 +268,57 @@ service isc-dhcp-server restart
 
 ### Jawaban:
 
+### Jipangu
+
+Buka *file* lagi, yaitu **/etc/dhcp/dhcpd.conf** dan edit seperti konfigurasi berikut.
+
+<img src="https://user-images.githubusercontent.com/37539546/141608332-7efb39e5-c91c-4d85-b5bd-3bc136fcc229.jpg" width="450">
+
+<img src="https://user-images.githubusercontent.com/37539546/141608339-be9a109c-2b1c-4049-9c6d-bd7b0c27c244.jpg" width="450">
+
+*Restart* DHCP Server.
+```
+service isc-dhcp-server restart
+```
+
+### Loguetown, Alabasta, dan TottoLand
+
+*Restart* semua *client* terlebih dahulu. Kemudian lakukan *testing* IP dan *nameserver* pada *client*. Salah satu contoh hasilnya pada **Loguetown** adalah seperti di bawah ini:
+
+<img src="https://user-images.githubusercontent.com/37539546/141608177-54d51e68-089f-4e50-a05c-58686b6cf8ac.JPG" width="600">
+
+*Testing* juga *client* apakah sudah bisa terkoneksi dengan internet dengan `ping` ke [**google.com**](https://www.google.com). Sebagai contoh pada `Loguetown`:
+
+<img src="https://user-images.githubusercontent.com/37539546/139522122-43ddb61d-0b3a-484f-a4a5-433109dd6529.JPG" width="600">
+
 ## Soal 7
 
 ### Luffy dan Zoro berencana menjadikan Skypiea sebagai server untuk jual beli kapal yang dimilikinya dengan alamat IP yang tetap dengan IP [prefix IP].3.69.
 
 ### Jawaban:
+
+### Jipangu
+
+Buka *file* lagi, yaitu **/etc/dhcp/dhcpd.conf** dan edit seperti konfigurasi berikut.
+
+<img src="https://user-images.githubusercontent.com/37539546/141608558-e0876061-f5b3-46c4-8881-7d760d2eebb8.JPG" width="450">
+
+### Skypiea
+
+`Edit network configuration` yang ada di menu `Configure` dan tambahkan baris perintah berikut.
+```
+hwaddress ether a6:e5:6b:b6:37:ed
+```
+
+Sebagai catatan, nilai **hwaddress** atau **hardware ethernet** diperoleh dari *interface* yang ada di *node* **Skypiea** dengan menggunakan *command* `ip a`.
+
+<img src="https://user-images.githubusercontent.com/37539546/141608876-d2d03424-6580-4042-a5b0-fc8eee17e657.JPG" width="600">
+
+Jadi nilainya akan berbeda tiap *project*.
+
+Kemudian *restart node*. *Testing* lagi dengan *command* `ip a`, maka akan terlihat bahwa IP telah berubah.
+
+<img src="https://user-images.githubusercontent.com/37539546/141608971-93d85ee6-85af-42ec-b7c0-3319379c9fc4.jpg" width="600">
 
 ## Soal 8
 
