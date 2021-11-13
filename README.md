@@ -449,6 +449,114 @@ service squid restart
 
 ### Jawaban:
 
+### EniesLobby
+
+Buat domain [**super.franky.yyy.com**](super.franky.yyy.com). Lakukan *command* seperti berikut pada `EnniesLobby`.
+```
+nano /etc/bind/named.conf.local
+```
+
+Isi konfigurasi domain [**super.franky.yyy.com**](super.franky.yyy.com) sesuai sintaks berikut.
+```
+zone "super.franky.a08.com" {
+    type master;
+    file "/etc/bind/kaizoku/super.franky.a08.com";
+    allow-transfer { 10.3.3.69; } // IP Skypiea
+};
+```
+
+Buat folder baru, yaitu **jarkom** pada **/etc/bind**.
+```
+mkdir /etc/bind/jarkom
+```
+
+*Copy file* **db.local** ke dalam folder **jarkom** yang baru dibuat dan ubah namanya menjadi [**super.franky.a08.com**](super.franky.a08.com).
+```
+cp /etc/bind/db.local /etc/bind/jarkom/super.franky.a08.com
+```
+
+Buka *file* [**super.franky.a08.com**](super.franky.a08.com) dan edit seperti konfigurasi berikut.
+
+<img src="https://user-images.githubusercontent.com/37539546/141643823-366f54f5-f2ef-4e87-bc51-6d793a55cb71.JPG" width="600">
+
+*Restart* **bind9**.
+```
+service bind9 restart
+```
+
+### Skypiea
+
+Melakukan instalasi **PHP**, **Apache2**, dan **Library Apache2** terlebih dahulu pada `Skypiea` dengan *update package list*. *Command* yang dijalankan adalah sebagai berikut.
+```
+apt-get update
+apt-get install apache2 -y
+apt-get install php -y
+apt-get install libapache2-mod-php7.0 -y
+
+apt-get install wget -y // Opsional, jika di perangkat tidak ada
+apt-get install unzip -y // Opsional, jika di perangkat tidak ada
+```
+
+*Download file requirement* yang [sudah diberikan](https://github.com/FeinardSlim/Praktikum-Modul-2-Jarkom/blob/main/super.franky.zip) lewat *notes* di bawah menggunakan `wget`.
+```
+wget https://raw.githubusercontent.com/FeinardSlim/Praktikum-Modul-2-Jarkom/main/super.franky.zip
+```
+
+*Unzip* **.zip** yang telah diunduh dan diletakkan di folder **root**.
+```
+unzip ~/super.franky.zip -d ~/
+```
+
+Buat folder baru, yaitu **super.franky.a08.com** pada **/var/www**.
+```
+mkdir /var/www/super.franky.a08.com
+```
+
+*Copy* semua *file* yang ada di folder hasil *unzip* ke folder **/var/www/super.franky.a08.com**.
+```
+cp -r ~/super.franky/error /var/www/franky.a08.com
+cp -r ~/super.franky/public /var/www/franky.a08.com
+```
+
+*Copy file* **000-default.conf** ke dalam folder **sites-available** dan ubah namanya menjadi **super.franky.a08.com.conf**.
+```
+cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/super.franky.a08.com.conf
+```
+
+Buka *file* **super.franky.a08.com.conf** dan tambahkan seperti konfigurasi berikut.
+
+<img src="https://user-images.githubusercontent.com/37539546/141644044-8247079d-5cbc-4f13-98e8-0c5f4efe392b.JPG" width="600">
+
+<img src="https://user-images.githubusercontent.com/37539546/141644099-31e72729-6338-4920-b802-3a0e17c90ad2.JPG" width="600">
+
+Aktifkan konfigurasi website dengan *command* berikut.
+```
+a2ensite super.franky.a08.com.conf
+```
+
+*Restart* **apache2**.
+```
+service apache2 restart
+```
+
+### Water7
+
+Buka lagi *file* **/etc/squid/squid.conf** dan edit seperti konfigurasi berikut.
+
+<img src="https://user-images.githubusercontent.com/37539546/141644268-9e23a394-657b-41a4-80c8-a20ac77127af.JPG" width="600">
+
+### Loguetown
+
+Lakukan *testing* pada `Loguetown` untuk cek apakah [**super.franky.a08.com**](super.franky.a08.com) atau [**www.super.franky.a08.com**](www.super.franky.a08.com) dapat diakses. Jika sukses, maka akan memunculkan hasil seperti berikut.
+
+<img src="https://user-images.githubusercontent.com/37539546/139523365-e34b96a3-692e-41a7-a0d5-66bcf0ba5eb2.JPG" width="500">
+
+<img src="https://user-images.githubusercontent.com/37539546/139523384-21b48893-eb45-4d8a-a88c-8197453bcdef.JPG" width="500">
+
+*Testing* juga dengan membuka [google.com](https://google.com) menggunakan **Lynx** dan lihat apakah berhasil *redirect* ke [**super.franky.a08.com**](super.franky.a08.com).
+
+<img src="https://user-images.githubusercontent.com/37539546/141644613-4e72607c-0667-4233-8e1e-7220de4bef53.gif" width="600">
+
 ## Soal 12
 
 ### Saatnya berlayar! Luffy dan Zoro akhirnya memutuskan untuk berlayar untuk mencari harta karun di [super.franky.yyy.com](super.franky.yyy.com). Tugas pencarian dibagi menjadi dua misi, Luffy bertugas untuk mendapatkan gambar (.png, .jpg), sedangkan Zoro mendapatkan sisanya. Karena Luffy orangnya sangat teliti untuk mencari harta karun, ketika ia berhasil mendapatkan harta karunnya, kemudian ia mengambil gambar dan melihatinya satu-satu dengan kecepatan 10 Kbps.
