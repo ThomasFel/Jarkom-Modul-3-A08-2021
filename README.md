@@ -36,7 +36,7 @@ Luffy yang sudah menjadi Raja Bajak Laut ingin mengembangkan daerah kekuasaannya
 
 Pertama, membuat topologi sesuai permintaan soal. Kemudian *setting network* masing-masing *node* dengan fitur `Edit network configuration` yang ada di menu `Configure`. Karena akan menggunakan DHCP, maka *setting network* akan sedikit berbeda dengan [Praktikum Modul 2](https://github.com/ThomasFel/Jarkom-Modul-2-A08-2021). *Setting* awal yang sudah ada dapat dihapus dan diganti dengan konfigurasi berikut:
 
-- Foosha
+- Foosha (Router & DHCP Relay)
   ```
   auto eth0
   iface eth0 inet dhcp
@@ -57,19 +57,19 @@ Pertama, membuat topologi sesuai permintaan soal. Kemudian *setting network* mas
 	  netmask 255.255.255.0
   ```
   
-- Loguetown
+- Loguetown (Client)
   ```
   auto eth0
   iface eth0 inet dhcp
   ```
   
-- Alabasta
+- Alabasta (Client)
   ```
   auto eth0
   iface eth0 inet dhcp
   ```
   
-- EniesLobby
+- EniesLobby (DNS Server)
   ```
   auto eth0
   iface eth0 inet static
@@ -78,7 +78,7 @@ Pertama, membuat topologi sesuai permintaan soal. Kemudian *setting network* mas
 	  gateway 10.3.2.1
   ```
   
-- Water7
+- Water7 (Proxy Server)
   ```
   auto eth0
   iface eth0 inet static
@@ -87,7 +87,7 @@ Pertama, membuat topologi sesuai permintaan soal. Kemudian *setting network* mas
 	  gateway 10.3.2.1
   ```
 
-- Jipangu
+- Jipangu (DHCP Server)
   ```
   auto eth0
   iface eth0 inet static
@@ -96,13 +96,13 @@ Pertama, membuat topologi sesuai permintaan soal. Kemudian *setting network* mas
 	  gateway 10.3.2.1
   ```
   
-- TottoLand
+- TottoLand (Client)
   ```
   auto eth0
   iface eth0 inet dhcp
   ```
 
-- Skypiea
+- Skypiea (Client)
   ```
   auto eth0
   iface eth0 inet dhcp
@@ -134,6 +134,13 @@ echo nameserver 192.168.122.1 > /etc/resolv.conf
 *Restart* semua *node* kembali. Lalu, *testing* semua *node* apakah sudah terkoneksi dengan internet dengan `ping` ke [**google.com**](google.com). Sebagai contoh pada `Loguetown`:
 
 <img src="https://user-images.githubusercontent.com/37539546/139522122-43ddb61d-0b3a-484f-a4a5-433109dd6529.JPG" width="600">
+
+### Semua client (Loguetown, Alabasta, TottoLand, Skypiea)
+
+Karena *client* nantinya digunakan untuk *testing*/membuka suatu web, perlu dilakukan instalasi **Lynx** menggunakan perintah berikut.
+```
+apt-get install lynx -y
+```
 
 ## Soal 2
 
@@ -173,15 +180,69 @@ Ada beberapa kriteria yang ingin dibuat oleh Luffy dan Zoro, yaitu:
 
 ### Jawaban:
 
+### Jipangu
+
+Melakukan instalasi **DHCP Server** terlebih dahulu pada `Jipangu` dengan *update package list*. *Command* yang dijalankan adalah sebagai berikut.
+```
+apt-get update
+apt-get install isc-dhcp-server -y
+```
+
+Buka *file* **/etc/default/isc-dhcp-server** dan edit seperti konfigurasi berikut.
+
+<img src="https://user-images.githubusercontent.com/37539546/141606487-f2d9486e-5c42-4769-b61e-692cb276fd78.JPG" width="600">
+
+Buka *file* lagi, yaitu **/etc/dhcp/dhcpd.conf** dan edit seperti konfigurasi berikut. Sebagai catatan, di konfigurasi ini juga sekalian mengatur *node* yang ada di Switch2.
+
+<img src="https://user-images.githubusercontent.com/37539546/141607080-33803e75-71e1-419a-b082-0f33fa1ba469.JPG" width="450">
+
+*Restart* DHCP Server.
+```
+service isc-dhcp-server restart
+```
+
+Perlu diketahui, apabila muncul *fail* seperti di bawah, dapat melakukan *restart* DHCP Server kembali.
+
+<img src="https://user-images.githubusercontent.com/37539546/141606738-ea9007d7-d26e-4f15-ac6a-8246d6fa7df7.JPG" width="600">
+
+Untuk memastikan apakah DHCP Server berjalan, dapat menggunakan *command* berikut.
+```
+service isc-dhcp-server status
+```
+
 ## Soal 4
 
 ### (Lanjutan) 3. Client yang melalui Switch3 mendapatkan range IP dari [prefix IP].3.30 - [prefix IP].3.50.
 
 ### Jawaban:
 
+### Jipangu
+
+Buka *file* lagi, yaitu **/etc/dhcp/dhcpd.conf** dan edit seperti konfigurasi berikut.
+
+<img src="https://user-images.githubusercontent.com/37539546/141607041-0874be37-7f43-44f7-b578-f8f619e1ca5d.JPG" width="450">
+
+*Restart* DHCP Server.
+```
+service isc-dhcp-server restart
+```
+
 ## Soal 5
 
 ### (Lanjutan) 4. Client mendapatkan DNS dari EniesLobby dan client dapat terhubung dengan internet melalui DNS tersebut.
+
+### Jipangu
+
+Buka *file* lagi, yaitu **/etc/dhcp/dhcpd.conf** dan edit seperti konfigurasi berikut.
+
+<img src="https://user-images.githubusercontent.com/37539546/141607397-fe6b2ae3-8b5f-4da9-af3d-4ba56659df2c.jpg" width="450">
+
+<img src="https://user-images.githubusercontent.com/37539546/141607402-9e1552af-2714-4019-99c8-90ce4be3b280.jpg" width="450">
+
+*Restart* DHCP Server.
+```
+service isc-dhcp-server restart
+```
 
 ### Jawaban:
 
