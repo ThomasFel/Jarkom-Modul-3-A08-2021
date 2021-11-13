@@ -396,13 +396,15 @@ Buka lagi *file* **/etc/squid/squid.conf** dan edit seperti konfigurasi berikut.
 service squid restart
 ```
 
+### Loguetown
+
 *Testing* dengan membuka [http://its.ac.id](http://its.ac.id) menggunakan **Lynx**.
 
-- Username: **luffybelikapala08**
+- *Username*: **luffybelikapala08**
 
   <img src="https://user-images.githubusercontent.com/37539546/141615637-eda2d571-7765-47c1-9337-1d5f36f49f24.gif" width="600">
 
-- Username: **zorobelikapala08**
+- *Username*: **zorobelikapala08**
 
   <img src="https://user-images.githubusercontent.com/37539546/141617653-ac09be07-2113-47f9-9a29-8d182b018313.gif" width="600">
 
@@ -411,6 +413,35 @@ service squid restart
 ### Transaksi jual beli tidak dilakukan setiap hari, oleh karena itu akses internet dibatasi dan hanya dapat diakses setiap hari Senin - Kamis pukul 07.00 - 11.00 dan setiap hari Selasa - Jumat pukul 17.00 - 03.00, keesokan harinya (sampai Sabtu pukul 03.00).
 
 ### Jawaban:
+
+### Water7
+
+Buat *file* **/etc/squid/acl.conf** dan tambahkan seperti konfigurasi berikut.
+
+<img src="https://user-images.githubusercontent.com/37539546/141624497-fe5f255a-9143-45b3-9ca1-63ed25fbd7b7.JPG" width="450">
+
+  - Ini menunjukkan bahwa akses *proxy* hanya bisa dilakukan pada **Senin - Kamis** pukul **07.00 - 11.00**, lalu **Selasa - Jumat** pukul **17.00 - 24.00**, dan terakhir **Rabu - Sabtu** pukul **00.00 - 03.00**. 
+
+Buka lagi *file* **/etc/squid/squid.conf** dan edit seperti konfigurasi berikut.
+
+<img src="https://user-images.githubusercontent.com/37539546/141626632-674b4caa-5403-43d1-a72d-8fc5f9d6cc81.JPG" width="600">
+
+*Restart* **squid**.
+```
+service squid restart
+```
+
+### Loguetown
+
+*Testing* dengan membuka [http://its.ac.id](http://its.ac.id) menggunakan **Lynx** dan atur tanggal tertentu menggunakan *command* `date -s "dd/MMM/yyyy hh:mm:ss"`.
+
+- Tanggal: **Kamis, 11 November 2021 pukul 04.00** (tidak bisa diakses)
+
+  <img src="https://user-images.githubusercontent.com/37539546/141640679-a2d48205-5b92-49f8-b17f-d8525a939179.gif" width="600">
+
+- Tanggal: **Sabtu, 13 November 2021 pukul 02.00** (bisa diakses)
+
+  <img src="https://user-images.githubusercontent.com/37539546/141642059-00a1ae51-e4db-488a-9596-565b196c568e.gif" width="600">
 
 ## Soal 11
 
