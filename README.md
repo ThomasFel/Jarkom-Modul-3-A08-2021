@@ -160,7 +160,7 @@ Buka *file* **/etc/default/isc-dhcp-relay** dan edit seperti konfigurasi berikut
 
 <img src="https://user-images.githubusercontent.com/37539546/141504252-90f1983b-2380-4739-93e1-42ccbb75d38c.JPG" width="600">
 
-*Restart* DHCP Relay.
+*Restart* **DHCP Relay**.
 ```
 service isc-dhcp-relay restart
 ```
@@ -196,7 +196,7 @@ Buka *file* lagi, yaitu **/etc/dhcp/dhcpd.conf** dan edit seperti konfigurasi be
 
 <img src="https://user-images.githubusercontent.com/37539546/141607080-33803e75-71e1-419a-b082-0f33fa1ba469.JPG" width="450">
 
-*Restart* DHCP Server.
+*Restart* **DHCP Server**.
 ```
 service isc-dhcp-server restart
 ```
@@ -222,7 +222,7 @@ Buka *file* lagi, yaitu **/etc/dhcp/dhcpd.conf** dan edit seperti konfigurasi be
 
 <img src="https://user-images.githubusercontent.com/37539546/141607041-0874be37-7f43-44f7-b578-f8f619e1ca5d.JPG" width="450">
 
-*Restart* DHCP Server.
+*Restart* **DHCP Server**.
 ```
 service isc-dhcp-server restart
 ```
@@ -241,7 +241,7 @@ Buka *file* lagi, yaitu **/etc/dhcp/dhcpd.conf** dan edit seperti konfigurasi be
 
 <img src="https://user-images.githubusercontent.com/37539546/141607402-9e1552af-2714-4019-99c8-90ce4be3b280.jpg" width="450">
 
-*Restart* DHCP Server.
+*Restart* **DHCP Server**.
 ```
 service isc-dhcp-server restart
 ```
@@ -257,7 +257,7 @@ Buka *file* **/etc/bind/named.conf.options** dan edit seperti konfigurasi beriku
 
 <img src="https://user-images.githubusercontent.com/37539546/141607951-e806b4f2-c11c-4de7-8f9f-d11d8d04fdf9.JPG" width="600">
 
-*Restart* bind9.
+*Restart* **bind9**.
 ```
 service bind9 restart
 ```
@@ -276,7 +276,7 @@ Buka *file* lagi, yaitu **/etc/dhcp/dhcpd.conf** dan edit seperti konfigurasi be
 
 <img src="https://user-images.githubusercontent.com/37539546/141608339-be9a109c-2b1c-4049-9c6d-bd7b0c27c244.jpg" width="450">
 
-*Restart* DHCP Server.
+*Restart* **DHCP Server**.
 ```
 service isc-dhcp-server restart
 ```
@@ -342,16 +342,21 @@ mv /etc/squid/squid.conf /etc/squid/squid.conf.bak
 
 Buat *file* konfigurasi baru, yaitu **/etc/squid/squid.conf** dan edit seperti konfigurasi berikut.
 
-<img src="https://user-images.githubusercontent.com/37539546/141609359-232358db-169d-44e6-903c-b1bcf8f484fa.JPG" width="450">
+<img src="https://user-images.githubusercontent.com/37539546/141614368-e781a577-ab7d-41d6-8915-2e07580ff95b.JPG" width="450">
 
 Jangan lupa untuk menambahkan *nameserver* dengan **IP EniesLobby** agar *client* bisa tersambung ke internet ketika membuka **Lynx**.
 ```
-nameserver 10.3.2.2
+echo nameserver 10.3.2.2 > resolv.conf
+```
+
+*Restart* **squid**.
+```
+service squid restart
 ```
 
 ### Loguetown
 
-Aktifkan *proxy* dengan *port* 5000 menggunakan sintaks berikut.
+Aktifkan *proxy* dengan *port* 5000 menggunakan sintaks berikut pada terminal. Ingat bahwa sintaks berikut mesti dijalankan secara manual lewat terminal, tidak bisa dijalankan lewat *script*.
 ```
 export http_proxy="http://10.3.2.3:5000"
 ```
@@ -363,11 +368,43 @@ env | grep -i http_proxy
 
 *Testing* dengan membuka [http://its.ac.id](http://its.ac.id) menggunakan **Lynx**.
 
+<img src="https://user-images.githubusercontent.com/37539546/141614857-b0cb70e7-00b2-47e3-ad2d-bd5f6ae80663.gif" width="600">
+
 ## Soal 9
 
 ### Agar transaksi jual beli lebih aman dan pengguna website ada dua orang, proxy dipasang autentikasi user proxy dengan enkripsi MD5 dengan dua username, yaitu `luffybelikapalyyy` dengan password `luffy_yyy` dan `zorobelikapalyyy` dengan password `zoro_yyy`.
 
 ### Jawaban:
+
+### Water7
+
+Buat akun baru untuk autentikasi user *proxy* menggunakan **htpasswd**. *Password* yang disimpan di **htpasswd** akan dienkripsi menggunakan **MD5**.
+```
+htpasswd -m -b -c /etc/squid/passwd luffybelikapala08 luffy_a08
+htpasswd -m -b /etc/squid/passwd zorobelikapala08 zoro_a08
+```
+  - `-m` untuk enkripsi **MD5**.
+  - `-b` untuk memasukkan *password* langsung lewat *command* terminal.
+  - `-c` untuk membuat *file* baru.
+
+Buka lagi *file* **/etc/squid/squid.conf** dan edit seperti konfigurasi berikut.
+
+<img src="https://user-images.githubusercontent.com/37539546/141614992-645e8371-c80f-4083-96d7-53699245fbcf.JPG" width="600">
+
+*Restart* **squid**.
+```
+service squid restart
+```
+
+*Testing* dengan membuka [http://its.ac.id](http://its.ac.id) menggunakan **Lynx**.
+
+- Username: **luffybelikapala08**
+
+  <img src="https://user-images.githubusercontent.com/37539546/141615637-eda2d571-7765-47c1-9337-1d5f36f49f24.gif" width="600">
+
+- Username: **zorobelikapala08**
+
+  <img src="https://user-images.githubusercontent.com/37539546/141617653-ac09be07-2113-47f9-9a29-8d182b018313.gif" width="600">
 
 ## Soal 10
 
