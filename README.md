@@ -326,6 +326,43 @@ Kemudian *restart node*. *Testing* lagi dengan *command* `ip a`, maka akan terli
 
 ### Jawaban:
 
+### Water7
+
+Melakukan instalasi **squid** dan **Library Apache2** terlebih dahulu pada `Water7` dengan *update package list*. *Command* yang dijalankan adalah sebagai berikut.
+```
+apt-get update
+apt-get install squid -y
+apt-get install apache2-utils -y
+```
+
+*Backup* *file* konfigurasi *default* yang disediakan squid.
+```
+mv /etc/squid/squid.conf /etc/squid/squid.conf.bak
+```
+
+Buat *file* konfigurasi baru, yaitu **/etc/squid/squid.conf** dan edit seperti konfigurasi berikut.
+
+<img src="https://user-images.githubusercontent.com/37539546/141609359-232358db-169d-44e6-903c-b1bcf8f484fa.JPG" width="450">
+
+Jangan lupa untuk menambahkan *nameserver* dengan **IP EniesLobby** agar *client* bisa tersambung ke internet ketika membuka **Lynx**.
+```
+nameserver 10.3.2.2
+```
+
+### Loguetown
+
+Aktifkan *proxy* dengan *port* 5000 menggunakan sintaks berikut.
+```
+export http_proxy="http://10.3.2.3:5000"
+```
+
+Untuk memastikan apakah *proxy* sudah benar, dapat menggunakan *command* berikut.
+```
+env | grep -i http_proxy
+```
+
+*Testing* dengan membuka [http://its.ac.id](http://its.ac.id) menggunakan **Lynx**.
+
 ## Soal 9
 
 ### Agar transaksi jual beli lebih aman dan pengguna website ada dua orang, proxy dipasang autentikasi user proxy dengan enkripsi MD5 dengan dua username, yaitu `luffybelikapalyyy` dengan password `luffy_yyy` dan `zorobelikapalyyy` dengan password `zoro_yyy`.
