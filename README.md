@@ -543,7 +543,12 @@ service apache2 restart
 
 Buka lagi *file* **/etc/squid/squid.conf** dan edit seperti konfigurasi berikut.
 
-<img src="https://user-images.githubusercontent.com/37539546/141644268-9e23a394-657b-41a4-80c8-a20ac77127af.JPG" width="600">
+<img src="https://user-images.githubusercontent.com/37539546/141644902-ab371602-9df1-46af-8a9f-dbe29ff69f0f.JPG" width="600">
+
+*Restart* **squid**.
+```
+service squid restart
+```
 
 ### Loguetown
 
@@ -563,11 +568,57 @@ Lakukan *testing* pada `Loguetown` untuk cek apakah [**super.franky.a08.com**](s
 
 ### Jawaban:
 
+### Water7
+
+Buat *file* **/etc/squid/acl-bandwidth.conf** dan tambahkan seperti konfigurasi berikut.
+
+<img src="https://user-images.githubusercontent.com/37539546/141645001-82535581-5efc-438b-9f0c-67fe6087a295.JPG" width="600">
+  
+  - **Delay parameters** di-*set* sebesar **10 Kbps**/**10000 bps** (*kilo bit per second*/*bit per second*) atau **1250Bps** (*byte per second*), berasal dari 10000 dibagi 8. Nilai *restore* dan *max* dibuat sama agar memperoleh *bandwidth* yang sesuai dengan soal yakni **10Kb**.
+  - Untuk penjelasan lebih lengkap dapat mengakses laman [berikut](https://sites.google.com/site/huyadesakai/linux/mengatur-bandwidth-di-squid-proxy).
+
+Buka lagi *file* **/etc/squid/squid.conf** dan edit seperti konfigurasi berikut.
+
+<img src="https://user-images.githubusercontent.com/37539546/141644928-5f44a413-902f-4257-8e02-ed2884efee08.JPG" width="600">
+
+*Restart* **squid**.
+```
+service squid restart
+```
+
+### Loguetown
+
+*Testing* dengan membuka [**super.franky.a08.com**](super.franky.a08.com) menggunakan **Lynx** dan mencoba mengunduh gambar. Ingat, *username* yang dipakai adalah `luffybelikapala08`.
+
+<img src="https://user-images.githubusercontent.com/37539546/141646204-767082aa-04d1-44e6-ac4e-ad22800927e2.gif" width="600">
+
 ## Soal 13
 
 ### Sedangkan, Zoro sangat bersemangat untuk mencari harta karun sehingga kecepatan kapal Zoro tidak dibatasi ketika sudah mendapatkan harta yang diinginkannya.
 
 ### Jawaban:
+
+### Water7
+
+Buka lagi *file* **/etc/squid/acl-bandwidth.conf** dan tambahkan seperti konfigurasi berikut.
+
+<img src="https://user-images.githubusercontent.com/37539546/141645098-ee4803d2-3f8e-40fd-b50e-345ccbd138e5.JPG" width="600">
+
+<img src="https://user-images.githubusercontent.com/37539546/141645121-63f5eb7d-e618-4040-9bf3-c18834a79e43.JPG" width="600">
+
+  - **Delay parameters** di-*set* sebesar -1/1, yaitu ***special case*** agar tidak dibatasi/*unlimited bandwidth*-nya.
+  - Untuk penjelasan lebih lengkap dapat mengakses laman [berikut](https://sites.google.com/site/huyadesakai/linux/mengatur-bandwidth-di-squid-proxy).
+  
+*Restart* **squid**.
+```
+service squid restart
+```
+
+### Loguetown
+
+*Testing* dengan membuka [**super.franky.a08.com**](super.franky.a08.com) menggunakan **Lynx** dan mencoba mengunduh *file* selain gambar. Ingat, *username* yang dipakai adalah `zorobelikapala08`.
+
+<img src="https://user-images.githubusercontent.com/37539546/141646297-41550b2d-a06d-4653-9feb-6071db8b216d.gif" width="600">
 
 ## Notes
 1. **yyy** pada URL adalah kode kelompok.
