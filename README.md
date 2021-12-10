@@ -460,7 +460,7 @@ Isi konfigurasi domain [**super.franky.yyy.com**](super.franky.yyy.com) sesuai s
 ```
 zone "super.franky.a08.com" {
     type master;
-    file "/etc/bind/kaizoku/super.franky.a08.com";
+    file "/etc/bind/jarkom/super.franky.a08.com";
     allow-transfer { 10.3.3.69; } // IP Skypiea
 };
 ```
